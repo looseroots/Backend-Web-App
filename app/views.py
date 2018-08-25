@@ -1,17 +1,15 @@
-from flask import redirect, url_for, render_template, request, jsonify
-from app.events import get_events
+from flask import redirect, url_for, render_template, request, jsonify, session
+from app.forms import UserForm
 from app import app, gmaps
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-	return jsonify(pingus='pongus')
+	userform = UserForm()
+	if userform.validate_on_submit():
+		username = userform.username.data
+		bio = userform.bio.data
+		print(username, bio)
 
-@app.route('/events')
-def events():
-	location = request.args.get('location', None, type=int)
+		return 'Successfully submitted form data with username {}, bio {}'.format(username, bio)
 
-	return jsonify(eventlist=get_events(location))
-
-@app.route('/profile')
-def profile():
-	pass
+	return render_template("index.html", userform=userform)
