@@ -1,1 +1,3 @@
 GMAPS_API_KEY='AIzaSyCNmgccUPpy_GChmm7b721Q0p6VzXyy3j4'
+
+SECRET_KEY='adsljfad;jsfkadsnfkasdkfgalsdhflshdfaln'
