@@ -1,8 +1,9 @@
 {% import "macros.html" as macros %}
 {% extends "base.html" %}
 {% block content %}
-	{% call macros.render_form(userform, action_text='Start your plan') %}
+	{% call macros.render_form(userform, action_text='Start your plan', enctype='multipart/form-data') %}
 		{{ macros.render_field(userform.username, label_visible=false, placeholder='Username') }}
-		{{ macros.render_field(userform.bio, label_visible=false, placeholder='Bio')}}
+		{{ macros.render_field(userform.bio, label_visible=false, placeholder='Bio') }}
+		{{ macros.render_field(userform.profile_picture, label_visible=false, placeholder='Profile Picture') }}
 	{% endcall %}
 {% endblock %}
