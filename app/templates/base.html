@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Looseroots</title>
-</head>
-<body>
-	<h1>Looseroots</h1>
 
-	{% block content %}
-	{% endblock %}
-</body>
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+
+	<title>Looseroots</title>
+
+	<!-- Navbar -->
+	<nav class="navbar navbar-dark bg-dark">		
+		<a href="{{ url_for('index') }}" class="btn btn-primary"> Home </a>
+	</nav>
+
+</head>
+
+{% block content %}
+{% endblock %}
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
 </html>
