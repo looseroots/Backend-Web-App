@@ -10,5 +10,6 @@ class CreateUser(FlaskForm):
 	phone = StringField('Phone Number', validators=[DataRequired()])
 
 class EditProfile(FlaskForm):
-	pass
-	# bio = StringField('')
+	username = StringField('Username', validators=[DataRequired()])
+	bio = StringField('Bio', validators=[DataRequired()])
+	profile_picture_link = StringField('Profile Picture', validators=[DataRequired()])

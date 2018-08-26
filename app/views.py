@@ -11,28 +11,30 @@ db = firestore.client()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-	create_user_form = CreateUser()
-	# edit_profile_form = EditProfile()
+	userform = CreateUser()
+	profileform = EditProfile()
 
-	if create_user_form.validate_on_submit():
+	if userform.validate_on_submit():
 		user = auth.create_user(
-			uid=str(create_user_form.username.data),
-			email=str(create_user_form.email.data),
+			uid=str(userform.username.data),
+			email=str(userform.email.data),
 			email_verified=True,
-			phone_number=str(create_user_form.phone.data),
-			password=str(create_user_form.password.data),
-			display_name=str(create_user_form.display_name.data),
+			phone_number=str(userform.phone.data),
+			password=str(userform.password.data),
+			display_name=str(userform.display_name.data),
 			disabled=False
 		)
 		print('Sucessfully created new user: {0}'.format(user.uid))
 
+	if profileform.validate_on_submit():
+		user_id = profileform.username.data
 
-	# if edit_profile_form.validate_on_submit():
-	# 	user_info = {
-	# 		u'bio': profileform.bio.data,
-	# 		u'profile_picture': profileform.profile_picture.data
-	# 	}
-	# 	db.collection(u'users').document(user.uid).set(user_info)
+		profile = {
+			u'bio': profileform.bio.data,
+			u'profile_picture_link': profileform.profile_picture_link.data
+		}
+
+		db.collection(u'users').document(user_id).set(profile)
 
 
-	return render_template("index.html", userform=create_user_form)
+	return render_template("index.html", userform=userform, profileform=profileform)
