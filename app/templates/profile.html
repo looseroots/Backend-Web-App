@@ -1,0 +1,24 @@
+{% import "macros.html" as macros %}
+{% extends "base.html" %}
+
+<body>
+{% block content %}
+
+<div class="container-fluid">
+	<div class="row row mt-5">
+		<div class="col-sm-3"></div>
+			<div class=col-lg">
+				<h1>Profile Form</h1>
+				{% call macros.render_form(profileform) %}
+					{{ macros.render_field(profileform.username, label_visible=false, placeholder='Username') }}
+					{{ macros.render_field(profileform.bio, label_visible=false, placeholder='Bio') }}
+					{{ macros.render_field(profileform.profile_picture_link, label_visible=false, placeholder='Picture Link')}}
+				{% endcall %}
+			</div>
+		<div class="col-sm-3"></div>
+	</div>
+</div>
+
+
+{% endblock %}
+</body>

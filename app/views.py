@@ -6,13 +6,16 @@ import firebase_admin #?
 from firebase_admin import auth
 from firebase_admin import firestore
 
-default_app = firebase_admin.initialize_app(cred, {'databaseURL': 'https://looseroots-7a373.firebaseio.com'})
+default_app = firebase_admin.initialize_app(cred)
 db = firestore.client()
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
+	return render_template("index.html")
+
+@app.route('/user', methods=['GET', 'POST'])
+def user():
 	userform = CreateUser()
-	profileform = EditProfile()
 
 	if userform.validate_on_submit():
 		user = auth.create_user(
@@ -26,6 +29,13 @@ def index():
 		)
 		print('Sucessfully created new user: {0}'.format(user.uid))
 
+	return render_template("user.html", userform=userform)
+
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+	profileform = EditProfile()
+
 	if profileform.validate_on_submit():
 		user_id = profileform.username.data
 
@@ -36,5 +46,5 @@ def index():
 
 		db.collection(u'users').document(user_id).set(profile)
 
+	return render_template("profile.html", profileform=profileform)
 
-	return render_template("index.html", userform=userform, profileform=profileform)
