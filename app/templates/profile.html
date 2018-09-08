@@ -1,4 +1,3 @@
-{% import "macros.html" as macros %}
 {% extends "base.html" %}
 
 <body>
@@ -9,11 +8,19 @@
 		<div class="col-sm-3"></div>
 			<div class=col-lg">
 				<h1>Profile Form</h1>
-				{% call macros.render_form(profileform) %}
-					{{ macros.render_field(profileform.username, label_visible=false, placeholder='Username') }}
-					{{ macros.render_field(profileform.bio, label_visible=false, placeholder='Bio') }}
-					{{ macros.render_field(profileform.profile_picture_link, label_visible=false, placeholder='Picture Link')}}
-				{% endcall %}
+
+				<form action="" method="post" novalidate>
+			        {{ profileform.hidden_tag() }}
+			        <p>
+			            {{ profileform.username.label }}<br>
+			            {{ profileform.username(size=32) }}
+			        </p>
+			        <p>
+			            {{ profileform.bio.label }}<br>
+			            {{ profileform.bio(size=32) }}
+			        </p>
+			        <p>{{ profileform.submit() }}</p>
+	    		</form>
 			</div>
 		<div class="col-sm-3"></div>
 	</div>

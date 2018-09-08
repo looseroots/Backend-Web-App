@@ -1,4 +1,4 @@
-from flask import redirect, url_for, render_template, request, jsonify
+from flask import redirect, url_for, render_template, request, jsonify, flash
 from app.forms import CreateUser, EditProfile
 from app import app, gmaps, cred
 
@@ -17,20 +17,20 @@ def index():
 
 @app.route('/user', methods=['GET', 'POST'])
 def user():
-	userform = CreateUser()
+	form = CreateUser()
 
-	if userform.validate_on_submit():
+	if form.validate_on_submit():
 		user = auth.create_user(
-			uid=str(userform.username.data),
-			email=str(userform.email.data),
+			uid=form.username.data,
+			email=form.email.data,
 			email_verified=False,
-			phone_number=str(userform.phone.data),
-			password=str(userform.password.data),
-			display_name=str(userform.display_name.data),
+			# phone_number=form.phone.data,
+			password=str(form.password.data),
+			display_name=form.username.data,
 			disabled=False)
-		print('Sucessfully created new user: {0}'.format(user.uid))
+		return redirect(url_for('profile'))
 
-	return render_template("user.html", userform=userform)
+	return render_template("user.html", title='Create User', form=form)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
@@ -42,18 +42,17 @@ def profile():
 
 		profile = {
 			u'bio': profileform.bio.data,
-			u'profile_picture_link': profileform.profile_picture_link.data
 		}
-
 		db.collection(u'users').document(user_id).set(profile)
+		return redirect(url_for('index'))
 
-	return render_template("profile.html", profileform=profileform)
+	return render_template("profile.html", title='Edit Profile', profileform=profileform)
 
 
 @app.route('/create', methods=['GET', 'POST'])
 def createUser():
 	user = auth.create_user(
-		uid='username',
+		uid=str("username"),
 	    email='user@example.com',
 	    email_verified=False,
 	    phone_number='+15555550100',
